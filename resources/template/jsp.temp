@@ -9,7 +9,7 @@
 	<div class="main-container">
 	<div class="row">
 		<div class="col-xs-12">
-			<h3 class="header smaller lighter blue">用户列表</h3>
+			<h3 class="header smaller lighter blue">@entityStrName列表</h3>
 			<div class="table-header">注意: 谨慎下面的操作</div>
 
 			<div class="table-responsive">
