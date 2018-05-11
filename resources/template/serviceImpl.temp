@@ -1,0 +1,61 @@
+package com.@companyName.@PACKIMPORT.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.@companyName.@PACKIMPORT.base.BaseServiceImpl;
+import com.@companyName.@PACKIMPORT.mapper.I@beanNameMapper;
+import com.@companyName.@PACKIMPORT.domain.@beanName;
+import com.@companyName.@PACKIMPORT.service.I@beanNameService;
+
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
+
+/**
+ * @ClassName:@beanNameServiceImpl
+ * @Description:@entityStrName业务层接口实现类
+ * @author @authorName
+ * @CreateDate @dataTimeStr
+ */
+@Service
+public class @beanNameServiceImpl extends BaseServiceImpl<@beanName> implements I@beanNameService {
+	
+	@Autowired
+	private I@beanNameMapper @beanLowerMapper;
+ 
+	public PageInfo<@beanName> find@beanNameList(@beanName @beanLower) {
+		// TODO 分页查询
+		PageHelper.startPage(@beanLower.getPageNum(), @beanLower.getPageSize());
+		PageInfo<@beanName> pageInfo = new PageInfo<@beanName>(@beanLowerMapper.find@beanNameList(@beanLower));
+		
+		return pageInfo;
+	}
+	
+	public @beanName get@beanNameById(@PRITYPE @PRINAME){
+		// TODO 根据ID查询
+		return @beanLowerMapper.get@beanNameById(@PRINAME);
+	}
+	
+	public boolean save@beanName(@beanName @beanLower){
+		// TODO 新增
+		return @beanLowerMapper.insert@beanNameSelective(@beanLower) > 0;
+	}
+	
+	public boolean edit@beanName(@beanName @beanLower){
+		// TODO 修改
+		return @beanLowerMapper.update@beanNameSelectiveById(@beanLower) > 0;
+	}
+	
+	public boolean del@beanName(List<@PRITYPE> @beanLowerArr){
+		// TODO	删除
+		Example example = new Example(@beanName.class);
+		Criteria c = example.createCriteria();
+		c.andIn("id", @beanLowerArr);
+		return @beanLowerMapper.deleteByExample(example) > 0;
+	}
+
+}

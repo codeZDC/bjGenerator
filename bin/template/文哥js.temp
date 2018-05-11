@@ -1,0 +1,205 @@
+var path = $("#contextPath").val();
+$(document).ready(function() {
+	
+	//初始化Table
+    var oTable = new TableInit();
+    oTable.Init();
+    
+    //初始化页面上面的按钮事件
+	$("#btn_add").click(function(){
+		//新增
+		$('#@beanLower_add_form')[0].reset();
+		$("#saveModal").modal({backdrop: 'static', keyboard: false});
+	});
+	$("#btn_edit").click(function(){
+		//编辑
+		var rowData = $("#table_@beanLower").bootstrapTable("getSelections");
+		if(rowData.length < 1){
+			$.alert("请勾选要编辑的对象");
+			return;
+		}
+		var data = rowData[rowData.length-1];
+		$("#@beanLower_edit_form").find(".form-control").each(function(){
+			$(this).val(data[$(this).attr("name")]);
+		});
+		$("#editModal").modal({backdrop: 'static', keyboard: false});
+	});
+	$("#btn_info").click(function(){
+		//详情
+		var rowData = $("#table_@beanLower").bootstrapTable("getSelections");
+		if(rowData.length < 1){
+			$.alert("请勾选要查看的对象");
+			return;
+		}
+		var data = rowData[rowData.length-1];
+		$("#@beanLower_info_Form").find("p").each(function(){
+			$(this).text(data[$(this).attr("name")]);
+		});
+		$("#infoModal").modal({backdrop: 'static', keyboard: false});
+	});
+	$("#btn_delete").click(function(){
+		$.confirm({
+			icon: 'fa fa-bolt',
+		    title: '提示',
+		    content:'您确定要删除吗？',
+		    buttons: {
+		        cancel: {
+		            text: '取消',
+		            btnClass: 'btn-cancel',
+		            action: function () {
+		            	//$.alert("取消");
+		            }
+		        },
+		        success: {
+		            text: '确定',
+		            btnClass: 'btn-success',
+		            action: function () {
+		            	btu_del_db();
+		            }
+		        }
+		    }
+		});
+	});
+});
+
+
+var TableInit = function () {
+    var oTableInit = new Object();
+    //初始化Table
+    oTableInit.Init = function () {
+        $('#table_@beanLower').bootstrapTable({
+            url: path+'/@beanLower/list.htm',         //请求后台的URL（*）
+            method: 'post',                      //请求方式（*）
+            toolbar: '#toolbar',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: true,                     //是否启用排序
+            sortName:"id",
+            sortOrder: "desc",                   //排序方式
+            queryParams: oTableInit.queryParams,//传递参数（*）
+            queryParamsType: 'limit',
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber:1,                       //初始化加载第一页，默认第一页
+            pageSize: 15,                       //每页的记录行数（*）
+            pageList: [10, 15, 20, 50],        //可供选择的每页的行数（*）
+            search: true,                       //是否显示表格搜索
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            //height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+            showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            contentType: "application/x-www-form-urlencoded", //解决POST提交问题
+            columns: [@columnsJSList],
+		    onLoadError : function (status){
+		    	if(Number(status) == 503){
+		    		window.location.href = path + "/sys/sysuser/noAuthorized";
+		    	}
+		    }
+        });
+    };
+
+    //得到查询的参数
+    oTableInit.queryParams = function (params) {
+        var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+        	pageSize: params.limit,   //页面大小
+    		pageNum: params.pageNumber,  //页码
+    		sortName: params.sort,
+    		sortOrder:params.order,
+    		searchText:params.search
+        };
+        return temp;
+    };
+    return oTableInit;
+};
+/**
+ * 新增到数据库
+ */
+function btu_add_db(){
+	$.ajax({
+		dataType : "json",
+		url : path +"/@beanLower/save.htm",  
+		type : "post", 
+		data : $("#@beanLower_add_form").serialize(), 
+		async : false,  
+		success : function(data) {
+			if(data.success){
+				$.alert(data.message);
+				$('#table_@beanLower').bootstrapTable('refresh');
+				$("#saveModal").modal("hide");
+			}else{
+				$.alert(data.message);
+			}
+		},
+		error : function(data){
+			if(data.status == 503){
+				$.alert("对不起，您没有该项操作的权限，请联系管理员。");
+			}
+		}
+	});
+}
+/**
+ * 更新到数据库
+ */
+function btu_edit_db(){
+	$.ajax({
+		dataType : "json",
+		url : path +"/@beanLower/edit.htm",  
+		type : "post", 
+		data : $("#@beanLower_edit_form").serialize(), 
+		async : false,  
+		success : function(data) {
+			if(data.success){
+				$.alert(data.message);
+				$('#table_@beanLower').bootstrapTable('refresh');
+				$("#editModal").modal("hide");
+			}else{
+				$.alert(data.message);
+			}
+		},
+		error : function(data){
+			if(data.status == 503){
+				$.alert("对不起，您没有该项操作的权限，请联系管理员。");
+			}
+		}
+	});
+}
+/**
+ * 删除到数据库
+ */
+function btu_del_db(){
+	var rowData = $("#table_@beanLower").bootstrapTable("getSelections");
+	var ids = [];
+	for(var i in rowData){
+		ids.push(rowData[i].id);
+	}
+	if(ids.length < 1){
+		$.alert("请勾选要删除的对象");
+		return;
+	}
+	$.ajax({
+		dataType : "json",
+		url : path +"/@beanLower/del.htm",  
+		type : "post", 
+		data : {ids:ids}, 
+		async : false,
+		success : function(data) {
+			if(data.success){
+				$.alert(data.message);
+				$('#table_@beanLower').bootstrapTable('refresh');
+			}else{
+				alert(data.message);
+			}
+		},
+		error : function(data){
+			if(data.status == 503){
+				$.alert("对不起，您没有该项操作的权限，请联系管理员。");
+			}
+		}
+	});
+}

@@ -1,0 +1,61 @@
+package com.@companyName.@PACKIMPORT.service;
+
+import java.util.List;
+
+import com.@companyName.@PACKIMPORT.base.IBaseService;
+import com.github.pagehelper.PageInfo;
+import com.@companyName.@PACKIMPORT.domain.@beanName;
+
+/**
+ * @ClassName:I@beanNameService
+ * @Description:@entityStrName业务层接口
+ * @author @authorName
+ * @CreateDate @dataTimeStr
+ */
+public interface I@beanNameService extends IBaseService<@beanName>{
+
+	/**
+	 * @title:find@beanNameList
+	 * @description: 查询@entityStrName列表
+	 * @author @authorName
+	 * @param @beanLower
+	 * @CreateDate  @dataTimeStr
+	 */
+	PageInfo<@beanName> find@beanNameList(@beanName @beanLower);
+	
+	/**
+	 * @title:get@beanNameById
+	 * @description: 根据ID查询@entityStrName信息
+	 * @author @authorName
+	 * @param @PRINAME	主键
+	 * @CreateDate  @dataTimeStr
+	 */
+	@beanName get@beanNameById(@PRITYPE @PRINAME);
+	
+	/**
+	 * @title:save@beanName
+	 * @description: 新增
+	 * @author @authorName
+	 * @param @beanLower
+	 * @CreateDate  @dataTimeStr
+	 */
+	boolean save@beanName(@beanName @beanLower);
+	
+	 /**
+	 * @title:edit@beanName
+	 * @description: 修改
+	 * @author @authorName
+	 * @param @beanLower
+	 * @CreateDate  @dataTimeStr
+	 */
+	boolean edit@beanName(@beanName @beanLower);
+	
+	/**
+	 * @title:del@beanName
+	 * @description: 删除
+	 * @author @authorName
+	 * @param @beanLowerArr	主键编号集合
+	 * @CreateDate  @dataTimeStr
+	 */
+	boolean del@beanName(List<@PRITYPE> @beanLowerArr);
+}

@@ -1,0 +1,113 @@
+package com.@companyName.@PACKIMPORT.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.pagehelper.PageInfo;
+import com.@companyName.@PACKIMPORT.base.BaseController;
+import com.@companyName.@PACKIMPORT.domain.@beanName;
+import com.@companyName.@PACKIMPORT.service.I@beanNameService;
+import com.tuzhi.bj.util.TzResult;
+
+/**
+ * @ClassName:@beanNameController
+ * @Description:@entityStrName的控制器
+ * @author @authorName
+ * @CreateDate @dataTimeStr
+ */
+@Controller
+@RequestMapping("/@beanLower")
+public class @beanNameController extends BaseController {
+
+	@Autowired
+	private I@beanNameService @beanLowerService;
+	
+	 /**
+	 * @title:find@beanNameList
+	 * @description: 分页
+	 * @author @authorName
+	 * @param @beanLower
+	 * @CreateDate  @dataTimeStr
+	 */
+	@RequestMapping("/list")
+	@ResponseBody
+	public TzResult find@beanNameList(@beanName @beanLower){
+		PageInfo<@beanName> page = @beanLowerService.find@beanNameList(@beanLower);
+		return TzResult.success().data(page);
+	}
+	
+	/**
+	 * @title:get@beanNameById
+	 * @description: 查询一条信息
+	 * @author @authorName
+	 * @param @PRINAME
+	 * @CreateDate  @dataTimeStr
+	 */
+	@RequestMapping("/get")
+	@ResponseBody
+	public @beanName get@beanNameById(@PRITYPE @PRINAME){
+		@beanName @beanLower = @beanLowerService.get@beanNameById(@PRINAME);
+		return @beanLower;
+	}
+	
+	
+	 /**
+	 * @title:edit@beanName
+	 * @description: 新增
+	 * @author @authorName
+	 * @param @beanLower
+	 * @CreateDate  @dataTimeStr
+	 */
+	@RequestMapping("save")
+	@ResponseBody
+	public Map<String, Object> save@beanName(@beanName @beanLower){
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean flag = @beanLowerService.save@beanName(@beanLower);
+		map.put("success", flag);
+		map.put("message", "新增"+(flag?"成功":"失败"));
+		return map;
+	}
+	
+	
+	 /**
+	 * @title:edit@beanName
+	 * @description: 修改
+	 * @author @authorName
+	 * @param @beanLower
+	 * @CreateDate  @dataTimeStr
+	 */
+	@RequestMapping("edit")
+	@ResponseBody
+	public Map<String, Object> edit@beanName(@beanName @beanLower){
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean flag = @beanLowerService.edit@beanName(@beanLower);
+		map.put("success", flag);
+		map.put("message", "修改"+(flag?"成功":"失败"));
+		return map;
+	}
+	
+	
+	 /**
+	 * @title:del@beanName
+	 * @description: 删除
+	 * @author @authorName
+	 * @param ids	主键ID集合
+	 * @CreateDate  @dataTimeStr
+	 */
+	@RequestMapping("del")
+	@ResponseBody
+	public Map<String, Object> del@beanName(@RequestParam(value = "ids[]",required = false,defaultValue = "") List<@PRITYPE> ids){
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean flag = @beanLowerService.del@beanName(ids);
+		map.put("success", flag);
+		map.put("message", "删除"+(flag?"成功":"失败"));
+		return map;
+	}
+}

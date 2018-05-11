@@ -1,0 +1,83 @@
+package com.@companyName.@PACKIMPORT.mapper;
+
+import java.util.List;
+
+import com.@companyName.@PACKIMPORT.domain.@beanName;
+
+import tk.mybatis.mapper.common.Mapper;
+
+ /**
+ * @ClassName:@beanNameMapper
+ * @Description:@entityStrName数据层接口
+ * @author @authorName
+ * @CreateDate @dataTimeStr
+ */
+public interface I@beanNameMapper extends Mapper<@beanName> {
+	
+	/**
+	 * @title:find@beanNameList
+	 * @description: 查询@entityStrName列表
+	 * @author @authorName
+	 * @param @beanLower
+	 * @CreateDate  @dataTimeStr
+	 */
+	List<@beanName> find@beanNameList(@beanName @beanLower);
+	
+	
+	/**
+	 * @title:get@beanNameById
+	 * @description: 查询@entityStrName信息
+	 * @author @authorName
+	 * @param @PRINAME
+	 * @CreateDate  @dataTimeStr
+	 */
+	@beanName get@beanNameById(@PRITYPE @PRINAME);
+	
+	
+	/**
+	 * @title:deleteByPriKey
+	 * @description: 根据id删除信息
+	 * @author @authorName
+	 * @param @PRINAME
+	 * @CreateDate  @dataTimeStr
+	 */
+	int deleteByPriKey(@PRITYPE @PRINAME);
+
+
+	/**
+	 * @title:insert
+	 * @description: 插入@entityStrName
+	 * @author @authorName
+	 * @param @beanLower
+	 * @CreateDate  @dataTimeStr
+	 */
+    int insert@beanName(@beanName @beanLower);
+
+
+	/**
+	 * @title:insertSelective
+	 * @description: 插入@entityStrName
+	 * @author @authorName
+	 * @param @beanLower
+	 * @CreateDate  @dataTimeStr
+	 */
+    int insert@beanNameSelective(@beanName @beanLower);
+
+	/**
+	 * @title:updateSelectiveById
+	 * @description: 更新@entityStrName（更新不为null的值）
+	 * @author @authorName
+	 * @param @beanLower
+	 * @CreateDate  @dataTimeStr
+	 */
+    int update@beanNameSelectiveById(@beanName @beanLower);
+
+	/**
+	 * @title:updateById
+	 * @description: 更新@entityStrName（更新不为null的值）
+	 * @author @authorName
+	 * @param @beanLower
+	 * @CreateDate  @dataTimeStr
+	 */
+    int update@beanNameById(@beanName @beanLower);
+}

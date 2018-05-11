@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.@companyName.@PACKIMPORT.mapper.I@beanNameMapper">
+  <resultMap id="@beanNameResultMap" type="com.@companyName.@PACKIMPORT.domain.@beanName">
+    @MapColumn
+  </resultMap>
+  <sql id="column_Where">
+  	<trim prefix="WHERE" prefixOverrides="AND|OR">
+    	@WhereColumn
+    </trim>
+  </sql>
+  <sql id="column_List">
+    @SelColumn
+  </sql>
+  
+  <!--
+  	功能：分页查询
+  -->
+  <select id="find@beanNameList" parameterType="com.@companyName.@PACKIMPORT.domain.@beanName" resultMap="@beanNameResultMap">
+    select	<include refid="column_List" />
+    from @entityTable
+    <include refid="column_Where" />
+    <if test="sortOrder !=null and sortOrder !='' and sortName != null and sortName != ''">
+    	order by 
+    	@OrderByColumn
+    </if>
+    
+  </select>
+  
+  <!--
+  	功能：根据ID查询
+  -->
+  <select id="get@beanNameById" parameterType="java.lang.@PRITYPE" resultMap="@beanNameResultMap">
+  	select <include refid="column_List" /> from @entityTable where @UPDATEALLWHERE
+  </select>
+  
+  <!--根据id删除-->
+  <delete id="deleteByPriKey" parameterType="java.lang.@PRITYPE">
+    delete from @entityTable
+    where @UPDATEALLWHERE
+  </delete>
+  
+  <!--全部插入-->
+  <insert id="insert@beanName" parameterType="com.@companyName.@PACKIMPORT.domain.@beanName"  useGeneratedKeys="true" keyProperty="@KEYPROPERTYVALUE">
+    insert into @entityTable (@INSERTALLCOL)
+    values (@INSERTALLVALUE)
+  </insert>
+  
+  <!--只插入不为null的值-->
+  <insert id="insert@beanNameSelective" parameterType="com.@companyName.@PACKIMPORT.domain.@beanName" useGeneratedKeys="true" keyProperty="@KEYPROPERTYVALUE">
+    insert into @entityTable
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      @INSERTNOTNULLCOL
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      @INSERTNOTNULLVALUE
+    </trim>
+  </insert>
+  
+  <!--只更新不为null的值-->
+  <update id="update@beanNameSelectiveById" parameterType="com.@companyName.@PACKIMPORT.domain.@beanName">
+    update @entityTable
+    <set>
+      @UPDATESETNOTNULL
+    </set>
+    where @UPDATEALLWHERE
+  </update>
+  
+  <!--
+  	功能：更新
+  -->
+  <update id="update@beanNameById" parameterType="com.@companyName.@PACKIMPORT.domain.@beanName">
+    update @entityTable
+    set @UPDATESETALL
+    where @UPDATEALLWHERE
+  </update>
+  
+</mapper>

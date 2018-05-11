@@ -1,0 +1,21 @@
+package com.@companyName.@PACKIMPORT.domain;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.@companyName.@PACKIMPORT.base.BaseDomain;
+
+
+/**
+ * @ClassName:@entityTableName
+ * @Description:@entityStrName的实体类
+ * @author @authorName
+ * @CreateDate @dataTimeStr
+ */
+@Table(name = "@entityTable")
+public class @entityTableName extends BaseDomain {
+	
+@ColumnStr
+	
+}

@@ -1,0 +1,49 @@
+package com.@companyName.@PACKIMPORT.test;
+
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.github.pagehelper.PageInfo;
+import com.@companyName.@PACKIMPORT.domain.@beanName;
+import com.@companyName.@PACKIMPORT.service.I@beanNameService;
+
+/**
+ * @entityStrName测试
+ * @author @authorName
+ *
+ * @dataTimeStr
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({ "classpath:spring.xml", "classpath:spring-mybatis.xml" })
+public class @beanNameTest {
+	@Autowired
+	private I@beanNameService @beanNameService;
+	
+	/*
+	 * 分页查询
+	 */
+	public void find@beanNameList(){
+		@beanName @beanLower = new @beanName();
+		@beanLower.setPageNum(1);
+		@beanLower.setPageSize(10);
+		PageInfo<@beanName> pageInfo = @beanNameService.find@beanNameList(@beanLower);
+		System.out.println("总页数："+pageInfo.getTotal());
+		for (@beanName dp : pageInfo.getList()) {
+			System.out.println("id:"+dp.getId());
+		}
+	}
+	
+	/*
+	 * 保存
+	 */
+	@org.junit.Test
+	public void save@beanName(){
+		@beanName @beanLower = new @beanName();
+		// ...
+		
+		@beanNameService.save@beanName(@beanLower);
+		System.out.println(@beanLower.getId());
+	}
+}
